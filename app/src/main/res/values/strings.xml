@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Hey! Food</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="distance_from_you">À %s de vous</string>
+    <string name="yes">Oui</string>
+    <string name="nop">Non</string>
+    <string name="permissions_required">Permissions Requis</string>
+    <string name="enable_permissions" formatted="false">Il Faut Activer les permissions pour l\'application fonctione .\nVous Voulez Activer les permissions ?</string>
+    <string name="show_details">Afficher Les Details</string>
+    <string name="title_activity_place_details">Détails</string>
+    <string name="tel">Téléphone : </string>
+    <string name="web">Site Web : </string>
+    <string name="open_now">Heures de travails</string>
+    <string name="book_now">Résérver maintenant</string>
+    <string name="book">Résérvation</string>
+    <string name="book_unavailiable">La résérvation enligne n est pas disponible</string>
+    <string name="fullname">Nom et Prénom</string>
+    <string name="phone">Numéro de téléphone</string>
+    <string name="next">Suivant</string>
+    <string name="cancel">Annuler</string>
+    <string name="fill_this_field">Le champ et requis</string>
+    <string name="book_item">Resérver</string>
+    <string name="book_sent_success">La résérvationà été envoyer avec succeé</string>
+    <string name="please_wait">Veuillez Patienter</string>
+    <string name="title_activity_add_restaurant_req">Ajouter Réstaurant</string>
+    <string name="action_add_rest">Ajouter le réstaurant</string>
+    <string name="email">Adress Email</string>
+    <string name="add">Ajouter</string>
+    <string name="rest_req_sent_succcess">Le réstaurant à été envoyer à l\'administration avec succes .</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_cat_restaurrants">CatRestaurrants</string>
+    <string name="about_text">Test</string>
+    <string name="title_activity_bookmarks">Bookmarks</string>
+</resources>
