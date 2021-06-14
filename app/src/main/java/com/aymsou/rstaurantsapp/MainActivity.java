@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.aymsou.rstaurantsapp.fragments.MapsActivity;
 import com.aymsou.rstaurantsapp.utils.ApiService;
 import com.aymsou.rstaurantsapp.utils.RetroClient;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TabsVPAdapter adapter = new TabsVPAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new CatsFragment(), "CATEGORIES");
-        //adapter.addFragment(new MapFragment(), "CARTE");
+        adapter.addFragment(new MapsActivity(), "CARTE");
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
