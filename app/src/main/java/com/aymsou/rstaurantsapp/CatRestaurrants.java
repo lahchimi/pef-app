@@ -51,6 +51,7 @@ public class CatRestaurrants extends AppCompatActivity {
         final ProgressBar placeInfoProgress = (ProgressBar)findViewById(R.id.placeInfoProgress);
 
         Call<List<Restaurant>> call = api.getCategoryRestaurants(CatId);
+        Log.d("xxx CatRestaurrants xxx", call.toString() );
         call.enqueue(new Callback<List<Restaurant>>() {
             @Override
             public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
@@ -61,6 +62,8 @@ public class CatRestaurrants extends AppCompatActivity {
                     RestaurantsAdapter rAdapter = new RestaurantsAdapter(restaurants, CatRestaurrants.this);
                     restaurantsRecyclerView.setAdapter(rAdapter);
                 }
+
+                Log.d("LengthRests xxx", response.toString() );
             }
 
             @Override

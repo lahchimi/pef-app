@@ -1,14 +1,19 @@
 package com.aymsou.rstaurantsapp;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -19,9 +24,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aymsou.rstaurantsapp.fragments.MapsActivity;
 import com.aymsou.rstaurantsapp.utils.ApiService;
 import com.aymsou.rstaurantsapp.utils.LastLocationM;
+import com.aymsou.rstaurantsapp.utils.Permission;
 import com.aymsou.rstaurantsapp.utils.RetroClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,11 +45,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCallback {
+public class AddRestaurantReq extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
     MapView mapView;
     Marker marker;
+    Permission permissions;
     String dragLat, dragLong;
+
+    private static final String[] LOCATION_PERMISSIONS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +69,37 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-/*
+
         mapView = (MapView) findViewById(R.id.MapView);
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mapView.onResume();
-            }
-        });
-     //   mapView.onCreate(savedInstanceState);
-
-
         mapView.onResume();
-       try {
+
+        try {
             MapsInitializer.initialize(getApplicationContext());
+            Log.d("TAG", "onCreate: MapsInitializer initialize");
         } catch (Exception e) {
             e.printStackTrace();
         }
+        verifyPermissions();
+        prepareMap();
+    }
 
+    void prepareMap() {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final GoogleMap googleMap) {
-                LatLng latLng = new LatLng(LastLocationM.lastLocation.getLatitude(), LastLocationM.lastLocation.getLongitude());
+
+
+
+               //LatLng latLng = new LatLng(LastLocationM.lastLocation.getLatitude(), LastLocationM.lastLocation.getLongitude());
+               LatLng latLng = new LatLng(34.26598, -6.58893);
+                dragLat = String.valueOf(34.26598);
+                dragLong = String.valueOf(-6.58893);
+
                 Location marker_location = new Location("locA");
                 marker_location.setLatitude(latLng.latitude);
                 marker_location.setLongitude(latLng.longitude);
+
                 googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
@@ -87,17 +108,18 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
                     @Override
                     public void onMapClick(LatLng latLng) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        Log.d("TAG onMapClick", "onMapClick: "+latLng);
                     }
                 });
                 googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
                     @Override
                     public void onMarkerDragStart(Marker marker) {
-
+                        Log.d("TAG onMarkerDragStart", "onMarkerDragStart: "+marker);
                     }
 
                     @Override
                     public void onMarkerDrag(Marker marker) {
-
+                        Log.d("TAG onMarkerDrag", "onMarkerDrag: "+marker);
                     }
 
                     @Override
@@ -105,6 +127,7 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
                         LatLng dragPosition = marker.getPosition();
                         dragLat = String.valueOf(dragPosition.latitude);
                         dragLong = String.valueOf(dragPosition.longitude);
+                        Log.d("TAG onMarkerDragEnd", "onMarkerDragEnd: dragLat="+dragLat+" dragLong="+dragLong);
                     }
                 });
                 googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -113,10 +136,11 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
                         dragLat = String.valueOf(latLng.latitude);
                         dragLong = String.valueOf(latLng.longitude);
                         marker.setPosition(latLng);
+                        Log.d("TAG onMapLongClick", "onMapLongClick: dragLat="+dragLat+" dragLong="+dragLong);
                     }
                 });
             }
-        }); */
+        });
     }
 
     @Override
@@ -137,6 +161,7 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
             View dialogView = inflater.inflate(R.layout.add_rest_form, null);
             final EditText inputEmail = (EditText)dialogView.findViewById(R.id.inputEmail);
             final EditText inputRestName = (EditText)dialogView.findViewById(R.id.inputRestName);
+            final EditText inputRestPhone = (EditText)dialogView.findViewById(R.id.inputRestPhone);
             dialogBuilder.setView(dialogView);
             dialogBuilder.setTitle(getResources().getString(R.string.title_activity_add_restaurant_req));
             dialogBuilder.setCancelable(false);
@@ -149,17 +174,32 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
             dialogBuilder.setPositiveButton(getResources().getString(R.string.add), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if(inputEmail.getText().toString().trim().isEmpty() || inputRestName.getText().toString().trim().isEmpty())
+                    if(inputEmail.getText().toString().trim().isEmpty() ||
+                            inputRestName.getText().toString().trim().isEmpty() ||
+                            inputRestPhone.getText().toString().trim().isEmpty())
                         return;
+                    Log.d("TAG", "onClick: +dragLat="+dragLat +" dragLong = "+dragLong);
+                    if( dragLat.trim().isEmpty() ){
+                        Toast.makeText(AddRestaurantReq.this, "Please select on map ", Toast.LENGTH_SHORT).show();
+
+                        return;
+                    }
+
                     final ProgressDialog progress = new ProgressDialog(AddRestaurantReq.this);
                     progress.setMessage(getResources().getString(R.string.please_wait));
                     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progress.setIndeterminate(true);
                     progress.show();
                     ApiService api = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
-                Log.d("AddRestaurantReq abdel:", "add_restaurant:"+RetroClient.WEBSITE_ROOT_URL);
+                    Log.d("TAG", "onClick:action_add_rest ");
 
-                Call<String> call = api.sendRestaurantRequest(dragLat, dragLong, inputEmail.getText().toString(), inputRestName.getText().toString());
+                    Call<String> call = api.sendRestaurantRequest(
+                            String.valueOf(dragLat) ,
+                            String.valueOf(dragLong),
+                            inputEmail.getText().toString(),
+                            inputRestName.getText().toString(),
+                            inputRestPhone.getText().toString()
+                    );
 
                    call.enqueue(new Callback<String>() {
                         @Override
@@ -168,12 +208,13 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
                                 progress.dismiss();
                                 Toast.makeText(AddRestaurantReq.this, getResources().getString(R.string.rest_req_sent_succcess), Toast.LENGTH_LONG).show();
                             }
-                            Log.d("AddRestauReq response:", response.toString());
+                            Log.d("AddRestauReq response:", String.valueOf(response)
+                            );
                         }
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
-                            Log.d("AddRestauReq onFailure:", t.toString());
+                            Log.d("AddRestauReq onFailure:"," " + call);
                             progress.dismiss();
                         }
                     });
@@ -186,62 +227,45 @@ public class AddRestaurantReq extends AppCompatActivity implements  OnMapReadyCa
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] perms, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, perms, grantResults);
+
+        if (permissions.areAllRequiredPermissionsGranted(perms, grantResults))
+            prepareMap();
+        else
+            permissions.showTipDialog(this, 1);
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       // mapView.onResume();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
-    }
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        mapView.onCreate(savedInstanceState);
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
+    private void verifyPermissions(){
+        Log.d("AddRestaurantReq", "verifyPermissions: xx...");
+        int permissionACCESS_FINE_LOCATION = ActivityCompat.checkSelfPermission(AddRestaurantReq.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if( permissionACCESS_FINE_LOCATION != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions(
+                    AddRestaurantReq.this,
+                    LOCATION_PERMISSIONS,
+                    1
+            );
+        }
+        int permissionACCESS_COARSE_LOCATION = ActivityCompat.checkSelfPermission(AddRestaurantReq.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if( permissionACCESS_COARSE_LOCATION != PackageManager.PERMISSION_GRANTED ){
+            ActivityCompat.requestPermissions(
+                    AddRestaurantReq.this,
+                    LOCATION_PERMISSIONS,
+                    1
+            );
+            Log.d("AddRestaurantReq", "verifyPermissions: if...");
+        }
     }
 
 }

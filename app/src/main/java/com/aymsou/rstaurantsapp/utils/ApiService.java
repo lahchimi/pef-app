@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @GET("nearbysearch/json?radius=3600&type=restaurant&key="+Const.API_KEY)
+    @GET("nearbysearch/json?radius=936000&type=restaurant&key="+Const.API_KEY)
     Call<MapResults> getNearbyRestaurants(@Query("location") String location);
 
     @FormUrlEncoded
@@ -43,7 +43,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("send_restaurant")
-    Call<String> sendRestaurantRequest(@Field("lon") String lon, @Field("lat") String lat, @Field("email") String email, @Field("name") String name);
+    Call<String> sendRestaurantRequest(@Field("lon") String lon, @Field("lat") String lat, @Field("email") String email, @Field("name") String name, @Field("phone") String phone);
 
     @FormUrlEncoded
     @POST("send_message")

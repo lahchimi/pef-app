@@ -72,7 +72,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
     boolean iSFirst = true;
     ArrayList<MapPlace> placeList;
     List<String> foundPlaces;
-
+    SupportMapFragment supportMapFragment;
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -178,17 +178,20 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
             public void onResponse(Call<MapResults> call, Response<MapResults> response) {
                 if (response.isSuccessful()) {
                     placeList = response.body().getResults();
-                   /* for (MapPlace place : placeList) {
+                    for (MapPlace place : placeList) {
+                        Log.d("TAG foundPlaces", "onResponse: MapPlace = " + place.toString());
                         if (!foundPlaces.contains(place.toString())) {
                             foundPlaces.add(place.toString());
-                            Log.d("TAG foundPlaces", "onResponse: "+place.toString());
+                            Log.d("TAG foundPlaces", "onResponse: place = "+place.toString());
                             Marker markerToAdd = googleMap.addMarker(new MarkerOptions().position(new LatLng(place.getGeometry().getLocation().getLat(), place.getGeometry().getLocation().getLng())).title(place.getName()));
                             markerToAdd.setTag(new MarkerData(place.getRating(), place.getPlace_id()));
                             markerToAdd.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_icon));
                         }
-                    }*/
-                    Log.d("TAG", "onResponse: " + response.toString() + " message: " + response.message());
+                    }
+                    Log.d("TAG", "onResponse:isSuccessful " + " message: " + response.body().getResults());
                 }
+
+                Log.d("TAG", "onResponse:getNearbyRestaurants " + response.toString() + " message: " + response.message());
             }
 
             @Override
@@ -200,7 +203,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
 
     @Override
     public void onLocationChanged(Location location) {
-     /*   mLastLocation = location;
+        mLastLocation = location;
         LastLocationM.lastLocation = mLastLocation;
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (iSFirst) {
@@ -209,9 +212,9 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
             iSFirst = false;
         }
         getNearbyRestaurants(latLng);
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }*/
+       // if (mGoogleApiClient != null) {
+       //     LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+       // }
     }
 
     public MapsActivity() {
@@ -220,9 +223,10 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* permissions = new Permission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions = new Permission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
         placeList = new ArrayList<>();
-        foundPlaces = new ArrayList<String>();*/
+        foundPlaces = new ArrayList<String>();
+        Log.d("TAG", "onCreate:permissions = " + permissions);
     }
 
     @Override
@@ -232,7 +236,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
 //        mMapView.onCreate(savedInstanceState);
 //        mMapView.onResume();
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
         supportMapFragment.getMapAsync(new OnMapReadyCallback(){
             @Override
@@ -240,27 +244,27 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override
                    public void onMapClick(LatLng latLng) {
-
+                       Log.d("TAG", "onMapClick:LatLng = " + latLng );
                    }
                });
             }
         });
         supportMapFragment.getMapAsync(this);
 
-//        try {
-//            MapsInitializer.initialize(getActivity().getApplicationContext());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        if (permissions.checkPermissions())
-//            prepareMap();
-//        else
-//            permissions.requestPermissions(1);
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (permissions.checkPermissions())
+            prepareMap();
+        else
+            permissions.requestPermissions(1);
         return rootView;
     }
 
     void prepareMap() {
-        mMapView.getMapAsync(new OnMapReadyCallback() {
+        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
@@ -278,6 +282,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
                     googleMap.setMyLocationEnabled(true);
                   //  return;
                 }
+                googleMap.setMyLocationEnabled(true);
                 googleMap.setInfoWindowAdapter(new InfoWindowAdapter());
                 googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                     @Override

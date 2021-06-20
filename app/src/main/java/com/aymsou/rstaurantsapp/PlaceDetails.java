@@ -245,6 +245,7 @@ public class PlaceDetails extends AppCompatActivity {
                                                                 progress.dismiss();
                                                                 Toast.makeText(PlaceDetails.this, getResources().getString(R.string.book_sent_success), Toast.LENGTH_LONG).show();
                                                             }
+                                                            Log.d("TAG", "onResponse:sendBookRequest "+ response.toString());
                                                         }
 
                                                         @Override
@@ -296,6 +297,8 @@ public class PlaceDetails extends AppCompatActivity {
 
         place_id = getIntent().getStringExtra("place_id");
 
+        Log.d("TAG", "onClick: RestaurantsAdapter => place_id = "+ place_id );
+        Log.d("TAG", "onClick: RestaurantsAdapter => mLastLocation = "+ mLastLocation );
         isfavorited = db.isInFavorites(place_id);
         if(isfavorited)
             favfab.setImageDrawable(getResources().getDrawable(R.drawable.heart));
@@ -320,6 +323,7 @@ public class PlaceDetails extends AppCompatActivity {
 
         int restaurant_id = getIntent().getIntExtra("restaurant_id", 1);
 
+        Log.d("TAG", "onCreate:restaurant_id = "+restaurant_id);
         Call<PlaceInfo> call = api.getRestaurantDetails(restaurant_id+"");
 
         call.enqueue(new Callback<PlaceInfo>() {
@@ -432,15 +436,17 @@ public class PlaceDetails extends AppCompatActivity {
                 }else{
                     try {
                         Log.d("TheError", response.errorBody().string());
+                        Log.d("TheError 2", response.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                Log.d("TAG", "onResponse:getRestaurantDetails "+ response.toString());
             }
 
             @Override
             public void onFailure(Call<PlaceInfo> call, Throwable t) {
-                Log.d("TheError", t.getMessage());
+                Log.d("TheError onFailure", t.getMessage());
             }
         });
     }

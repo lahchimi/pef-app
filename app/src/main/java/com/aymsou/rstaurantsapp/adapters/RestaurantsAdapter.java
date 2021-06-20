@@ -71,10 +71,11 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ctx, PlaceDetails.class);
-                intent.putExtra("place_id", rest.getId());
+                intent.putExtra("place_id", String.valueOf(rest.getId()) );
                 intent.putExtra("restaurant_id", rest.getId());
                 intent.putExtra("current_location", LastLocationM.lastLocation);
                 ctx.startActivity(intent);
+                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getId() ="+ rest.getId() );
             }
         });
     }

@@ -3,6 +3,8 @@ package com.aymsou.rstaurantsapp.adapters;
 import android.content.Context;
 import android.content.Intent;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.categoryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("onClick Cat", "onClick: xxx");
                 Intent intent = new Intent(ctx, CatRestaurrants.class);
                 intent.putExtra("catName", cat.getName());
                 intent.putExtra("catId", cat.getId());
