@@ -6,11 +6,11 @@
     android:id="@+id/content_place_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_color"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/black_color"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.aymsou.rstaurantsapp.PlaceDetails"
     tools:showIn="@layout/activity_place_details">
@@ -18,14 +18,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/back_color"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_marginTop="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card_view:cardBackgroundColor="@android:color/white"
+            android:layout_marginTop="18dp"
+            card_view:cardBackgroundColor="@color/black_hover_color"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -44,7 +43,7 @@
                     android:id="@+id/placeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gold_color"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -66,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ratingBar"
                     android:layout_marginTop="10dp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gold_color"
                     android:textSize="18sp" />
 
             </RelativeLayout>
@@ -75,11 +74,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            card_view:cardBackgroundColor="@android:color/white"
+            android:visibility="gone"
+            card_view:cardBackgroundColor="@color/black_hover_color"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -111,12 +110,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:visibility="gone"
             android:id="@+id/photosCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            card_view:cardBackgroundColor="@android:color/white"
+            android:visibility="gone"
+            card_view:cardBackgroundColor="@color/cardview_dark_background"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -150,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardBackgroundColor="@color/black_hover_color"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -166,11 +165,11 @@
                     android:layout_centerInParent="true" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/placePhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -184,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:text="@string/tel"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -192,20 +191,20 @@
                         android:id="@+id/placePhoneData"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textIsSelectable="true"
                         android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/placeWebsite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/placePhone"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -219,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:text="@string/web"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -227,7 +226,7 @@
                         android:id="@+id/placeWebData"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textIsSelectable="true"
                         android:textSize="18sp" />
 
@@ -242,7 +241,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardBackgroundColor="@color/black_hover_color"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -258,19 +257,19 @@
                     android:layout_centerInParent="true" />
 
                 <LinearLayout
-                    android:visibility="gone"
                     android:id="@+id/placeOther"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:text="@string/open_now"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -278,7 +277,7 @@
                         android:id="@+id/placeIsOpenNow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textIsSelectable="true"
                         android:textSize="18sp" />
 
@@ -290,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/placeOther"
                     android:layout_marginTop="10dp"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/gold_color"
                     android:textIsSelectable="true"
                     android:textSize="18sp" />
 
@@ -299,12 +298,12 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:visibility="gone"
             android:id="@+id/cardMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            card_view:cardBackgroundColor="@android:color/white"
+            android:visibility="gone"
+            card_view:cardBackgroundColor="@color/cardview_dark_background"
             card_view:cardCornerRadius="4dp"
             card_view:cardElevation="2dp"
             card_view:contentPadding="10dp">
@@ -323,7 +322,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Menu"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/gold_color"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -340,12 +339,12 @@
                         android:layout_centerInParent="true" />
 
                     <TextView
-                        android:textColor="@android:color/black"
                         android:id="@+id/menuUnav"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:text="Menu is unavailiable now"
+                        android:textColor="@color/gold_color"
                         android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView

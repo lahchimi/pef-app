@@ -5,47 +5,50 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black_color">
 
         <Button
             android:id="@+id/add_new_item"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_below="@+id/tableLinear"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/tableLinear"
+            android:background="@color/gold_color"
             android:text="+"
+            android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/tableLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@color/colorPrimary"
+                android:orientation="horizontal"
                 android:padding="10dp">
 
                 <TextView
-                    android:layout_weight="3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="3"
                     android:text="Item"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/golden_color" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="Quantité"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/golden_color" />
 
             </LinearLayout>
 

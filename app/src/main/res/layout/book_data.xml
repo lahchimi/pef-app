@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_color"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_name"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <EditText
             android:id="@+id/inputFullname"
@@ -20,16 +22,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_phone"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <EditText
             android:id="@+id/inputPhone"
-            android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/phone" />
+            android:hint="@string/phone"
+            android:inputType="phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

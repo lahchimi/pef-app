@@ -13,12 +13,12 @@ public class PlaceInfo{
     public String getPeriodText(){
         String txt = "";
         txt += "Lundi: "+this.periods[0][0]+" - "+this.periods[0][1];
-        txt += "\nMardi: "+this.periods[1][0]+" - "+this.periods[1][1];
-        txt += "\nMercredi: "+this.periods[2][0]+" - "+this.periods[2][1];
-        txt += "\nJeudi: "+this.periods[3][0]+" - "+this.periods[3][1];
-        txt += "\nVendredi: "+this.periods[4][0]+" - "+this.periods[4][1];
-        txt += "\nSamedi: "+this.periods[5][0]+" - "+this.periods[5][1];
-        txt += "\nDimanche: "+this.periods[6][0]+" - "+this.periods[6][1];
+        txt += "\n\nMardi: "+this.periods[1][0]+" - "+this.periods[1][1];
+        txt += "\n\nMercredi: "+this.periods[2][0]+" - "+this.periods[2][1];
+        txt += "\n\nJeudi: "+this.periods[3][0]+" - "+this.periods[3][1];
+        txt += "\n\nVendredi: "+this.periods[4][0]+" - "+this.periods[4][1];
+        txt += "\n\nSamedi: "+this.periods[5][0]+" - "+this.periods[5][1];
+        txt += "\n\nDimanche: "+this.periods[6][0]+" - "+this.periods[6][1];
         return txt;
     }
 

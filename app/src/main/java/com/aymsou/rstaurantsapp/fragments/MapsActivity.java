@@ -17,13 +17,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.aymsou.rstaurantsapp.CatRestaurrants;
 import com.aymsou.rstaurantsapp.PlaceDetails;
 import com.aymsou.rstaurantsapp.R;
+import com.aymsou.rstaurantsapp.adapters.RestaurantsAdapter;
 import com.aymsou.rstaurantsapp.model.MapPlace;
 import com.aymsou.rstaurantsapp.model.MapResults;
+import com.aymsou.rstaurantsapp.model.Restaurant;
 import com.aymsou.rstaurantsapp.utils.ApiService;
 import com.aymsou.rstaurantsapp.utils.LastLocationM;
 import com.aymsou.rstaurantsapp.utils.Permission;
@@ -61,7 +66,7 @@ import retrofit2.Response;
 
 
 //GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-public class MapsActivity extends Fragment implements  LocationListener , OnMapReadyCallback{
+public class MapsActivity extends Fragment implements  LocationListener , OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     MapView mMapView;
     GoogleMap googleMap;
@@ -108,7 +113,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
             placeDistance.setText(MapPlace.getDistance(marker_location, mLastLocation));
             RatingBar ratingBar = (RatingBar) contentsView.findViewById(R.id.ratingBar);
             ratingBar.setRating(((MarkerData) marker.getTag()).Rating);
-
+            Log.d("TAG xxx", "getInfoWindow: ");
             return contentsView;
         }
 
@@ -171,36 +176,90 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
 //    }
 
     void getNearbyRestaurants(LatLng latLng) {
-        ApiService api = RetroClient.getApiService(RetroClient.GMAPS_ROOT_URL);
-        Call<MapResults> call = api.getNearbyRestaurants(String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
-        call.enqueue(new Callback<MapResults>() {
+
+
+        ApiService api = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
+
+        Call<List<Restaurant>> call = api.getCategoryRestaurants("");
+        Log.d("CatRestaurrants xxx", call.toString() );
+        call.enqueue(new Callback<List<Restaurant>>() {
             @Override
-            public void onResponse(Call<MapResults> call, Response<MapResults> response) {
-                if (response.isSuccessful()) {
-                    placeList = response.body().getResults();
-                    for (MapPlace place : placeList) {
-                        Log.d("TAG foundPlaces", "onResponse: MapPlace = " + place.toString());
-                        if (!foundPlaces.contains(place.toString())) {
-                            foundPlaces.add(place.toString());
-                            Log.d("TAG foundPlaces", "onResponse: place = "+place.toString());
-                            Marker markerToAdd = googleMap.addMarker(new MarkerOptions().position(new LatLng(place.getGeometry().getLocation().getLat(), place.getGeometry().getLocation().getLng())).title(place.getName()));
-                            markerToAdd.setTag(new MarkerData(place.getRating(), place.getPlace_id()));
-                            markerToAdd.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_icon));
-                        }
+            public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
+                if(response.isSuccessful()){
+
+                    List<Restaurant> restaurants = response.body();
+
+                    for (int i=0; i<restaurants.size(); i++){
+
+
+                        Marker markerToAdd = googleMap.addMarker(new MarkerOptions()
+                                .position(new LatLng( restaurants.get(i).getLng(),restaurants.get(i).getLat() ))
+                                .title( restaurants.get(i).getName())
+                        );
+
+                        markerToAdd.setTag(restaurants.get(i).getId());
+                        markerToAdd.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_icon));
+                        // Set a listener for marker click.
+                        googleMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) MapsActivity.this);
+                        Log.d("onCreate.loop", "restaurants.LatLng: "+restaurants.get(i).getLat()+" , "+restaurants.get(i).getLng());
                     }
-                    Log.d("TAG", "onResponse:isSuccessful " + " message: " + response.body().getResults());
+
+
                 }
 
-                Log.d("TAG", "onResponse:getNearbyRestaurants " + response.toString() + " message: " + response.message());
+                Log.d("onCreate resp xxx", response.toString() );
             }
 
             @Override
-            public void onFailure(Call<MapResults> call, Throwable t) {
-
+            public void onFailure(Call<List<Restaurant>> call, Throwable t) {
+                Log.d("onCreate fail: ", t.getMessage());
             }
         });
-    }
+     // ApiService api = RetroClient.getApiService(RetroClient.GMAPS_ROOT_URL);
+     //   Call<MapResults> call = api.getNearbyRestaurants(String.valueOf(latLng.latitude) + "," + String.valueOf(latLng.longitude));
+     //   call.enqueue(new Callback<MapResults>() {
+     //       @Override
+     //       public void onResponse(Call<MapResults> call, Response<MapResults> response) {
+     //           if (response.isSuccessful()) {
+     //               placeList = response.body().getResults();
+     //               for (MapPlace place : placeList) {
+     //                   Log.d("TAG xxx foundPlaces", "onResponse: MapPlace = " + place.toString());
+     //                   if (!foundPlaces.contains(place.toString())) {
+     //                       foundPlaces.add(place.toString());
+     //                       Log.d("TAG foundPlaces", "onResponse: place = "+place.toString());
+     //                       Marker markerToAdd = googleMap.addMarker(new MarkerOptions().position(new LatLng(place.getGeometry().getLocation().getLat(), place.getGeometry().getLocation().getLng())).title(place.getName()));
+     //                       markerToAdd.setTag(new MarkerData(place.getRating(), place.getPlace_id()));
+     //                       markerToAdd.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_restaurant_icon));
+     //                   }
+     //               }
 
+     //               Log.d("TAG xxx", "onResponse:isSuccessful " + " message: " + response.body().getResults());
+     //           }
+
+     //           Log.d("TAG xxx", "onResponse:getNearbyRestaurants " + response.toString() + " message: " + response.message());
+     //       }
+
+     //       @Override
+     //       public void onFailure(Call<MapResults> call, Throwable t) {
+
+     //       }
+     //   });
+    }
+    /** Called when the user clicks a marker. */
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        // Retrieve the data from the marker.
+        Integer tagid = (Integer) marker.getTag();
+
+        Toast.makeText(getActivity(), marker.getTitle() +" has been clicked " , Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), PlaceDetails.class);
+        intent.putExtra("place_id", String.valueOf(tagid) );
+        intent.putExtra("restaurant_id", tagid);
+        intent.putExtra("current_location", LastLocationM.lastLocation);
+        startActivity(intent);
+        return true;
+    }
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -208,10 +267,14 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if (iSFirst) {
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
             iSFirst = false;
         }
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+       // googleMap.setMaxZoomPreference(20.0f);
         getNearbyRestaurants(latLng);
+
        // if (mGoogleApiClient != null) {
        //     LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
        // }
@@ -226,7 +289,8 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
         permissions = new Permission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
         placeList = new ArrayList<>();
         foundPlaces = new ArrayList<String>();
-        Log.d("TAG", "onCreate:permissions = " + permissions);
+        Log.d("TAG xxx", "onCreate:permissions = " + permissions);
+
     }
 
     @Override
@@ -244,7 +308,7 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                    @Override
                    public void onMapClick(LatLng latLng) {
-                       Log.d("TAG", "onMapClick:LatLng = " + latLng );
+                       Log.d("TAG xxx", "onMapClick:LatLng = " + latLng );
                    }
                });
             }

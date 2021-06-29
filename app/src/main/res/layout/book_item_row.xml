@@ -32,9 +32,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@color/red_color"
+            android:background="@color/colorPrimary"
             android:text="×"
-            android:textColor="@android:color/white"
+            android:textColor="@color/gold_color"
             android:textSize="14sp" />
 
     </RelativeLayout>

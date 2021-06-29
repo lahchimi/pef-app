@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorAccent">#FF5252</color>
-    <color name="primary_color_disabled">#663F51B5</color>
-    <color name="back_color">#EEEEEE</color>
-    <color name="red_color">#D32F2F</color>
+    <color name="colorPrimary">#1b1b1b</color>
+    <color name="colorPrimaryDark">#5C5B59</color>
+    <color name="colorAccent">#676562</color>
+    <color name="primary_color_disabled">#1b1b1b</color>
+    <color name="gold_color">#AC7209</color>
+    <color name="red_color">#AC7209</color>
+    <color name="golden_color">#BC9112</color>
+    <color name="black_color">#0d0c0e</color>
+    <color name="black_hover_color">#1B1B1B</color>
 </resources>

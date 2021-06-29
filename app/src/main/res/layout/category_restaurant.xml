@@ -4,10 +4,10 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@android:color/white"
+    android:layout_marginBottom="12dp"
+    card_view:cardBackgroundColor="@color/primary_color_disabled"
     card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="2dp"
-    android:layout_marginBottom="12dp">
+    card_view:cardElevation="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,27 +27,26 @@
         </RelativeLayout>
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:visibility="gone"
             android:id="@+id/placeImg"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@drawable/placeholder_img" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/placeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginBottom="0dp"
             android:text="hsd hgjsdhd jgsdh hgsd j gjsdgj hg"
-            android:textColor="@android:color/black"
+            android:textColor="@color/golden_color"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <RatingBar
-            android:visibility="gone"
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
@@ -55,16 +54,17 @@
             android:layout_margin="10dp"
             android:layout_marginBottom="0dp"
             android:isIndicator="true"
-            android:numStars="5" />
+            android:numStars="5"
+            android:visibility="gone" />
 
         <Button
-            android:visibility="gone"
             android:id="@+id/details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_margin="10dp"
-            android:text="Afficher les détails" />
+            android:text="Afficher les détails"
+            android:visibility="gone" />
 
     </LinearLayout>
 

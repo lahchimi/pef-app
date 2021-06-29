@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.format_list_bulleted);
-        //tabLayout.getTabAt(1).setIcon(R.drawable.google_maps);
+        tabLayout.getTabAt(1).setIcon(R.drawable.google_maps);
 
 
     }
