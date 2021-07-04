@@ -73,14 +73,9 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 Intent intent = new Intent(ctx, PlaceDetails.class);
                 intent.putExtra("place_id", String.valueOf(rest.getId()) );
                 intent.putExtra("restaurant_id", rest.getId());
+                intent.putExtra("place_name", rest.getName());
                 intent.putExtra("current_location", LastLocationM.lastLocation);
                 ctx.startActivity(intent);
-                //Log.d("TAG", "onClick: RestaurantsAdapter => rest.getId() ="+ rest.getPlaceId() );
-                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getId() ="+ rest.getId() );
-                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getName() ="+ rest.getName() );
-                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getLat() ="+ rest.getLat() );
-                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getLng() ="+ rest.getLng() );
-                Log.d("TAG", "onClick: RestaurantsAdapter => rest.getEmail() ="+ rest.getEmail() );
             }
         });
     }

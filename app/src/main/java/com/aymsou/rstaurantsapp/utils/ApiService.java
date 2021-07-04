@@ -32,7 +32,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("send_book_request")
-    Call<String> sendBookRequest(@Field("email") String email, @Field("fullname") String fullname, @Field("f_body") String fbody);
+    Call<String> sendBookRequest(@Field("email") String email, @Field("fullname") String fullname, @Field("f_body") String fbody, @Field("total") Float total );
 
     @POST("categories")
     Call<List<Category>> getCategories();

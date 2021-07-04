@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String KEY_ID = "id";
     private static final String KEY_PLACE_ID = "place_id";
+    private static final String KEY_RESTO_NAME = "name";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_RESTAURANTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PLACE_ID + " TEXT" + ")";
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PLACE_ID + " TEXT," +  KEY_RESTO_NAME + " TEXT )";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
     @Override
@@ -55,17 +56,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Restaurant rest = new Restaurant();
-                //rest.setPlace_id(cursor.getString(1));
+                rest.setId( Integer.parseInt(cursor.getString(1)) );
+                rest.setName(cursor.getString(2));
                 restList.add(rest);
             } while (cursor.moveToNext());
         }
         return restList;
     }
 
-    public void addPlace(String placeid) {
+    public void addPlace(String placeid, String name) {
+
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // onUpgrade(db, 1,2);
+        // onCreate(db);
+
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_ID, placeid);
+        values.put(KEY_RESTO_NAME, name);
         db.insert(TABLE_RESTAURANTS, null, values);
         db.close();
     }

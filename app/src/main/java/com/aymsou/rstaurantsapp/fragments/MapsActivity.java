@@ -188,12 +188,12 @@ public class MapsActivity extends Fragment implements  LocationListener , OnMapR
                 if(response.isSuccessful()){
 
                     List<Restaurant> restaurants = response.body();
-
+                    googleMap.clear();
                     for (int i=0; i<restaurants.size(); i++){
 
 
                         Marker markerToAdd = googleMap.addMarker(new MarkerOptions()
-                                .position(new LatLng( restaurants.get(i).getLng(),restaurants.get(i).getLat() ))
+                                .position(new LatLng( restaurants.get(i).getLat(),restaurants.get(i).getLng() ))
                                 .title( restaurants.get(i).getName())
                         );
 

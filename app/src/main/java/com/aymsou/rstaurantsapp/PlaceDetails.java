@@ -69,6 +69,7 @@ public class PlaceDetails extends AppCompatActivity {
     Button bookBtn;
     RecyclerView menuRecyclerView;
     String place_id;
+    String place_name;
     EditText inputFullname, inputPhone;
     TextInputLayout layoutFullname, layoutPhone;
     Facture facture;
@@ -237,7 +238,7 @@ public class PlaceDetails extends AppCompatActivity {
                                                     progress.show();
 
                                                     ApiService api = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
-                                                    Call<String> call = api.sendBookRequest(book_place_info.getEmail(), facture.Fullname, facture.toString());
+                                                    Call<String> call = api.sendBookRequest(book_place_info.getEmail(), facture.Fullname, facture.toString(), facture.calculateTotal());
                                                     call.enqueue(new Callback<String>() {
                                                         @Override
                                                         public void onResponse(Call<String> call, Response<String> response) {
@@ -296,6 +297,7 @@ public class PlaceDetails extends AppCompatActivity {
         mLastLocation = getIntent().getParcelableExtra("current_location");
 
         place_id = getIntent().getStringExtra("place_id");
+        place_name = getIntent().getStringExtra("place_name");
 
         Log.d("TAG", "onClick: RestaurantsAdapter => place_id = "+ place_id );
         Log.d("TAG", "onClick: RestaurantsAdapter => mLastLocation = "+ mLastLocation );
@@ -312,10 +314,12 @@ public class PlaceDetails extends AppCompatActivity {
                     isfavorited = false;
                     favfab.setImageDrawable(getResources().getDrawable(R.drawable.heart_outline));
                 }else{
-                    db.addPlace(place_id);
+                    db.addPlace(place_id,place_name);
                     isfavorited = true;
                     favfab.setImageDrawable(getResources().getDrawable(R.drawable.heart));
                 }
+                Log.d("TAG favfab", "onClick: RestaurantsAdapter => place_id = "+ place_id );
+                Log.d("TAG favfab", "onClick: RestaurantsAdapter => mLastLocation = "+ mLastLocation );
             }
         });
 
@@ -338,7 +342,7 @@ public class PlaceDetails extends AppCompatActivity {
                     bookBtn.setVisibility(View.VISIBLE);
 
                     final PlaceInfo details = response.body();
-
+                    Log.d("TAG_PlaceInfo", "onResponse: "+response.body());
                     placeName.setText(details.getName());
                     placeAddress.setText(details.getEmail());
                     ratingBar.setRating(details.getRating());
@@ -407,7 +411,7 @@ public class PlaceDetails extends AppCompatActivity {
                             weekText.setText(TextUtils.join("\n", details.getOpeningHours().getWeekdayText()));
                     }*/
 
-                    /*ApiService api2 = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
+                    ApiService api2 = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
                     Call<BookPlaceInfo> call2 = api2.getBookPlaceInfo(place_id);
                     call2.enqueue(new Callback<BookPlaceInfo>() {
                         @Override
@@ -426,13 +430,14 @@ public class PlaceDetails extends AppCompatActivity {
                                     menuRecyclerView.setAdapter(mAdapter);
                                 }
                             }
+                            Log.d("TAG onResponse", "getBookPlaceInfo: "+response.message());
                         }
 
                         @Override
                         public void onFailure(Call<BookPlaceInfo> call, Throwable t) {
-
+                            Log.d("TAG onFailure", "getBookPlaceInfo: "+t.toString());
                         }
-                    });*/
+                    });
                 }else{
                     try {
                         Log.d("TheError", response.errorBody().string());

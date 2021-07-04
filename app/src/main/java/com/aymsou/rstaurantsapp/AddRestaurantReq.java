@@ -194,8 +194,8 @@ public class AddRestaurantReq extends AppCompatActivity implements LocationListe
                     Log.d("TAG", "onClick:action_add_rest ");
 
                     Call<String> call = api.sendRestaurantRequest(
-                            String.valueOf(dragLat) ,
                             String.valueOf(dragLong),
+                            String.valueOf(dragLat) ,
                             inputEmail.getText().toString(),
                             inputRestName.getText().toString(),
                             inputRestPhone.getText().toString()

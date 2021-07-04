@@ -1,5 +1,7 @@
 package com.aymsou.rstaurantsapp.model;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,15 +15,21 @@ public class Facture {
     @Override
     public String toString() {
         String resstr="";
-        resstr+="<h3>Nom et prénom : "+this.Fullname+"</h3>";
-        resstr+="<h3>Numéro de téléphone : "+this.PhoneNumber+"</h3>";
-        resstr+="<table border=1><tr><td>élément</td><td>Quanité</td><td>Prix</td></tr>";
-        for(FactureItem item : this.items){
-            resstr+="<tr><td>"+item.itemName+"</td><td>"+item.quantity+"</td><td>"+(item.quantity*item.price)+" MAD</td></tr>";
-        }
-        resstr+="</table>";
-        resstr+="<h3>Totale : "+this.calculateTotal()+" MAD</h3>";
-       return resstr;
+        //resstr+="<h3>Nom et prénom : "+this.Fullname+"</h3>";
+        //resstr+="<h3>Numéro de téléphone : "+this.PhoneNumber+"</h3>";
+        //resstr+="<table border=1><tr><td>élément</td><td>Quanité</td><td>Prix</td></tr>";
+        //for(FactureItem item : this.items){
+        //    resstr+="<tr><td>"+item.itemName+"</td><td>"+item.quantity+"</td><td>"+(item.quantity*item.price)+" MAD</td></tr>";
+        //}
+        //resstr+="</table>";
+        //resstr+="<h3>Totale : "+this.calculateTotal()+" MAD</h3>";
+
+        //for(FactureItem item : this.items){
+        //    resstr+="itemName:"+item.itemName+",quantity:"+item.quantity+",price:"+(item.quantity*item.price)+" MAD</td></tr>";
+        //}
+        String json = new Gson().toJson(this.items);
+       return json;
+       //return resstr;
     }
 
     public float calculateTotal(){

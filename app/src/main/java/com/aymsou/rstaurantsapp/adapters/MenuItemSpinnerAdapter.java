@@ -40,7 +40,7 @@ public class MenuItemSpinnerAdapter extends ArrayAdapter<BookMenuItem> {
         TextView label = new TextView(context);
         label.setPadding(40,40,40,40);
         label.setTextColor(context.getResources().getColor(android.R.color.black));
-        label.setText(myObjs.get(position).getItemName());
+        label.setText(myObjs.get(position).getItemName() + " - " + myObjs.get(position).getItemPrice() + " MAD" );
         return label;
     }
 
@@ -49,7 +49,7 @@ public class MenuItemSpinnerAdapter extends ArrayAdapter<BookMenuItem> {
         TextView label = new TextView(context);
         label.setPadding(40,40,40,40);
         label.setTextColor(context.getResources().getColor(android.R.color.black));
-        label.setText(myObjs.get(position).getItemName());
+        label.setText(myObjs.get(position).getItemName() + " - " + myObjs.get(position).getItemPrice() + " MAD");
         return label;
     }
 
