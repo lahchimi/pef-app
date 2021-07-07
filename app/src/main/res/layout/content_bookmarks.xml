@@ -5,7 +5,6 @@
     android:id="@+id/content_bookmarks"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_color"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -24,6 +23,5 @@
         android:id="@+id/restaurantsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_color"
         android:scrollbars="vertical" />
 </RelativeLayout>

@@ -7,6 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class BookPlaceInfo {
 
+    @SerializedName("id")
+    @Expose
+    private String id;
+
     @SerializedName("book_email")
     @Expose
     private String email;
@@ -37,6 +41,10 @@ public class BookPlaceInfo {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void setEmail(String email) {

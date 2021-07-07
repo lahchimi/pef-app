@@ -238,7 +238,14 @@ public class PlaceDetails extends AppCompatActivity {
                                                     progress.show();
 
                                                     ApiService api = RetroClient.getApiService(RetroClient.WEBSITE_ROOT_URL);
-                                                    Call<String> call = api.sendBookRequest(book_place_info.getEmail(), facture.Fullname, facture.toString(), facture.calculateTotal());
+                                                    Call<String> call = api.sendBookRequest(
+                                                            book_place_info.getId(),
+                                                            book_place_info.getEmail(),
+                                                            facture.Fullname,
+                                                            facture.PhoneNumber,
+                                                            facture.toString(),
+                                                            facture.calculateTotal());
+
                                                     call.enqueue(new Callback<String>() {
                                                         @Override
                                                         public void onResponse(Call<String> call, Response<String> response) {

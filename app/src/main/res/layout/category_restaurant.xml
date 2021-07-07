@@ -5,67 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    card_view:cardBackgroundColor="@color/primary_color_disabled"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/black_hover_color">
 
-        <RelativeLayout
-            android:id="@+id/placeInfoProgress"
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="155dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_3" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="#9F0B0B0B"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_centerInParent="true" />
+            <RelativeLayout
+                android:id="@+id/placeInfoProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+                <ProgressBar
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/placeImg"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            fresco:actualImageScaleType="focusCrop"
-            fresco:placeholderImage="@drawable/placeholder_img" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/placeName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="0dp"
-            android:text="hsd hgjsdhd jgsdh hgsd j gjsdgj hg"
-            android:textColor="@color/golden_color"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/placeImg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImage="@drawable/placeholder_img" />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="0dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/placeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="hsd hgjsdhd jgsdh hgsd j gjsdgj hg"
+                android:textColor="#D5C2A6"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-        <Button
-            android:id="@+id/details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="10dp"
-            android:text="Afficher les détails"
-            android:visibility="gone" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="0dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:visibility="gone" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="10dp"
+                android:background="@drawable/shap_button"
+                android:text="Afficher les détails"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>

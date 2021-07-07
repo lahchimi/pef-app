@@ -15,7 +15,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/imgar"
         android:text="text text text text text text text text text text text text "
-        android:textColor="@color/golden_color"
+        android:textColor="#CDBEA1"
         android:textSize="20sp"
         android:textStyle="bold" />
 
